@@ -1,0 +1,5 @@
+file_reading/__pycache__/
+utils/__pycache__/
+*.txt
+__pycache__/
+data_files/
