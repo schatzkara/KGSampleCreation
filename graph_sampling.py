@@ -77,4 +77,4 @@ if __name__ == '__main__':
 	# rels_to_avoid.remove('treats')
 	entities_to_avoid = set(read_entities('data_files/robokop/ontological_entities.txt'))
 
-	sample = random_walk(file_name, output_file, desired_size=4000000, rels_to_avoid=rels_to_avoid, entities_to_avoid=entities_to_avoid)
+	random_walk(file_name, output_file, desired_size=4000000, rels_to_avoid=rels_to_avoid, entities_to_avoid=entities_to_avoid)

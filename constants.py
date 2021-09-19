@@ -2,7 +2,7 @@
 from Knowledge_Graph import Knowledge_Graph
 
 # the knowledge graph in use
-KG = 'drkg'  # 'robokop' or 'drkg'
+KG = 'robokop'  # 'robokop' or 'drkg'
 GRAPH = Knowledge_Graph(KG)
 SAMPLE = 'rw4mil'
 INDICES = True

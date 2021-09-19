@@ -46,6 +46,6 @@ def read_type_hierarchy(file_name):
 
 
 if __name__ == '__main__':
-	file_name = 'data_files/type_hierarchy.txt'
+	file_name = 'data_files/robokop/type_hierarchy.txt'
 	hierarchy = read_type_hierarchy(file_name)
 	print(hierarchy)

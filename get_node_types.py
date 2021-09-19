@@ -2,16 +2,16 @@ import os
 from utils.graph_utils import extract_deepest_labels, get_entity_type
 
 
-def make_types_file(file_name):
-	head, tail = os.path.split(file_name)
-	name, ext = tail.split('.')
-	output_file = os.path.join(head, name + '_types.' + ext)
+def make_types_file(input_file, output_file):
+	# head, tail = os.path.split(file_name)
+	# name, ext = tail.split('.')
+	# output_file = os.path.join(head, name + '_types.' + ext)
 
-	print(output_file)
+	# print(output_file)
 
 	nodes = set()
 	node_types = {}
-	with open(file_name, 'r') as f:
+	with open(input_file, 'r') as f:
 		f = f.readlines()
 		count = 0
 		total = len(f)

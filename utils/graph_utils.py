@@ -83,7 +83,7 @@ def extract_full_labels(label):
 	parent = label
 	while parent is not None:
 		labels.append(parent)
-		parent = GRAPH.parents[parent]
+		parent = GRAPH.entity_type_parents[parent]
 
 	return labels
 
@@ -118,10 +118,10 @@ def get_label_depth(label):
 	:param label: (str) the label whose depth is desired
 	:returns: (int) the depth of label
 	"""
-	parent = GRAPH.parents[label]
+	parent = GRAPH.entity_type_parents[label]
 	depth = 0
 	while parent is not None:
-		parent = GRAPH.parents[parent]
+		parent = GRAPH.entity_type_parents[parent]
 		depth += 1
 
 	return depth
@@ -155,21 +155,21 @@ def subtype_of_helper(sub, sup):
 	# 	return True
 	# # if sub == 'Concept' or sup == 'Concept':
 	# # 	return False
-	# parent = GRAPH.parents[sub]
+	# parent = GRAPH.entity_type_parents[sub]
 	# while parent is not None:
 	# 	if parent == sup:
 	# 		return True
-	# 	parent = GRAPH.parents[parent]
+	# 	parent = GRAPH.entity_type_parents[parent]
 
 	# return False	
 	return sub == sup or descendant_of(sub, sup)
 
 def descendant_of(d, a):
-	parent = GRAPH.parents[d]
+	parent = GRAPH.entity_type_parents[d]
 	while parent is not None:
 		if parent == a:
 			return True
-		parent = GRAPH.parents[parent]
+		parent = GRAPH.entity_type_parents[parent]
 
 	return False
 
@@ -201,21 +201,21 @@ def supertype_of_helper(sup, sub):
 	# 	return True
 	# # if sup == 'Concept' or sub == 'Concept':
 	# # 	return False
-	# parent = GRAPH.parents[sub]
+	# parent = GRAPH.entity_type_parents[sub]
 	# while parent is not None:
 	# 	if parent == sup:
 	# 		return True
-	# 	parent = GRAPH.parents[parent]
+	# 	parent = GRAPH.entity_type_parents[parent]
 
 	# return False
 	return sup == sub or ancestor_of(sup, sub)
 
 def ancestor_of(a, d):
-	parent = GRAPH.parents[d]
+	parent = GRAPH.entity_type_parents[d]
 	while parent is not None:
 		if parent == a:
 			return True
-		parent = GRAPH.parents[parent]
+		parent = GRAPH.entity_type_parents[parent]
 
 	return False
 

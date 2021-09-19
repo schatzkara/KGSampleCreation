@@ -5,7 +5,7 @@ from read_graph_txt import read_graph_txt
 from utils.graph_utils import clean_integer_output, get_entity_type
 
 
-def get_hypothesized_facts_txt(kg_file, output_file, n, predicate):
+def get_hypothesized_facts_txt(kg_file, new_kg_file, output_file, predicate, n):
 	with open(kg_file, 'r') as f:
 		triples = f.readlines()
 
@@ -20,12 +20,12 @@ def get_hypothesized_facts_txt(kg_file, output_file, n, predicate):
 		triples.remove(fact)
 		hypothesized_facts.append(fact)
 
-	head, tail = os.path.split(kg_file)
-	name, ext = tail.split('.')
-	output_file2 = os.path.join(head, name + '_wo_test_data.' + ext)
-	# print(output_file)
+	# head, tail = os.path.split(kg_file)
+	# name, ext = tail.split('.')
+	# output_file2 = os.path.join(head, name + '_wo_test_data.' + ext)
+	# # print(output_file)
 
-	with open(output_file2, 'w') as f:
+	with open(new_kg_file, 'w') as f:
 		for s, p, o in triples:
 			f.write('{}\t{}\t{}\n'.format(s, p, o))
 
@@ -251,12 +251,21 @@ if __name__ == '__main__':
 	# print(type(triples[0][0]))
 	# print(triples[0])
 
-	kg_file = 'drkg_with_negs.txt'
-	types_file = 'drkg_types.txt'
-	pos_file = 'hypothesized_facts.txt'
-	neg_file = 'hypothesized_negatives.txt'
+	'''kg_file = 'drkg_sample/drkg_with_negs.txt'
+	types_file = 'drkg_sample/drkg_types.txt'
+	pos_file = 'drkg_sample/hypothesized_facts.txt'
+	neg_file = 'drkg_sample/hypothesized_negatives.txt'
 
 	# get_hypothesized_facts_txt(kg_file, pos_file, 250, 'treats')
 	# get_negative_examples(kg_file, types_file, pos_file, neg_file, 5)
 
-	get_hypothesized_facts_txt('drkg_with_negs_wo_test_data.txt', 'other_hypothesized_facts.txt', 100, 'treats')
+	# get_hypothesized_facts_txt('drkg_with_negs_wo_test_data.txt', 'other_hypothesized_facts.txt', 100, 'treats')
+	get_negative_examples(kg_file, types_file, 'drkg_sample/other_hypothesized_facts.txt', 'drkg_sample/other_hypothesized_negatives.txt', 5)'''
+
+	kg_file = '../ExplanationGeneration/data_files/robokop_sample/complete_sample.txt'
+	types_file = '../ExplanationGeneration/data_files/robokop/robokop_types.txt'
+	pos_file = '../ExplanationGeneration/data_files/robokop_sample/all_treats_not_in_sample/last_100_true.txt'
+	neg_file = '../ExplanationGeneration/data_files/robokop_sample/all_treats_not_in_sample/last_100_false.txt'
+
+	get_negative_examples(kg_file, types_file, pos_file, neg_file, 1)
+
