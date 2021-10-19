@@ -19,7 +19,7 @@ ENTITIES_TO_AVOID = []
 
 TYPES_FILE = 'robokop_sample_entity_types.txt'
 
-NEGATIVES_FILE = 'robokop_generated_negatives.txt'
+NEGATIVES_FILE = 'sample_generated_negatives.txt'
 SAMPLE_WITH_NEGS_FILE = 'sample_with_negs.txt'
 PREDICATE = 'biolink:treats'
 NUM_NEGS_PER_POS = 1
@@ -56,7 +56,7 @@ if __name__ == '__main__':
 	# Random walk must be done on KG WITHOUT duplicated symmetric relations
 	# Rule mining must be done on KG WITH duplicated symmetric relations
 
-	'''# Steps:
+	# Steps:
 	# 1. Use kg_to_txt.py to create a .txt version of the KG without duplicated symmetric relations
 	kg_to_txt(KG_FILE_NAME, duplicate_symm_rels=False)
 	print('Completed step 1.')
@@ -71,9 +71,6 @@ if __name__ == '__main__':
 
 	# 4. Use add_negative_predicate.py to generate n negative triples for each positive triple of each predicate desired AND (optionally) add the negative triples to the neo4j version of the KG
 	generate_negative_predicate(SAMPLE_FILE_NAME, TYPES_FILE, NEGATIVES_FILE, predicate=PREDICATE, n=NUM_NEGS_PER_POS)
-	
-	if ADD_NEGS_TO_NEO4J:
-		add_negative_predicates_to_neo4j(NEGATIVES_FILE) # does the sample need to be marked here????
 
 	with open(SAMPLE_WITH_NEGS_FILE, 'w') as f:
 		with open(SAMPLE_FILE_NAME, 'r') as g:
@@ -82,23 +79,25 @@ if __name__ == '__main__':
 		with open(NEGATIVES_FILE, 'r') as g:
 			lines = g.readlines()
 			f.writelines(lines)
+	
+	if ADD_NEGS_TO_NEO4J:
+		add_negative_predicates_to_neo4j(NEGATIVES_FILE) # does the sample need to be marked here????
 	print('Completed step 4.')
 
 	# 5. Use get_experimental_data.py to generate n candidiate facts and m alternative facts for each candidate fact
 	# 6. Remove the candidates and alternatives from the sample
-	# get_hypothesized_facts_txt(SAMPLE_WITH_NEGS_FILE, SAMPLE_WO_TEST_FILE, FACTS_FILE, PREDICATE, NUM_POS_FACTS)
-	# get_negative_examples(SAMPLE_WITH_NEGS_FILE, TYPES_FILE, FACTS_FILE, ALTS_FILE, NUM_ALTS_PER_POS)
+	get_hypothesized_facts_txt(SAMPLE_WITH_NEGS_FILE, SAMPLE_WO_TEST_FILE, FACTS_FILE, PREDICATE, NUM_POS_FACTS)
+	get_negative_examples(SAMPLE_WITH_NEGS_FILE, TYPES_FILE, FACTS_FILE, ALTS_FILE, NUM_ALTS_PER_POS)
 	get_hypothesized_facts_txt(SAMPLE_WO_TEST_FILE, SAMPLE_WO_TEST_FILE2, FACTS_FILE2, PREDICATE, NUM_POS_FACTS2)
 	print('Completed step 5 and 6.')
-
-
-	# 7. Use kg_to_txt.py to duplicate the symmetric relations in this sample
-	duplicate_symm_rels(SAMPLE_WO_TEST_FILE2, SAMPLE_WITH_DUPLCIATE_SYMM_RELS)
-	print('Completed step 7.')
-	'''
 
 	# 8. Use mark_subset_in_neo4j.py to mark all triples in the subset in Neo4j
 	mark_subset_in_neo4j(SAMPLE_WO_TEST_FILE2, SAMPLE_NAME, clear_previous=False)
 	print('Completed step 8.')
+
+	# 7. Use kg_to_txt.py to duplicate the symmetric relations in this sample
+	duplicate_symm_rels(SAMPLE_WO_TEST_FILE2, SAMPLE_WITH_DUPLCIATE_SYMM_RELS)
+	print('Completed step 7.')	
+	
 
 	# instead, create sample in a new neo4j database????

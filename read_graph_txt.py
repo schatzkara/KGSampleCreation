@@ -55,5 +55,7 @@ def read_types_file(file_name):
 
 
 if __name__ == '__main__':
-	read_graph_txt('working_sample/complete_sample.txt')
+	# read_graph_txt('working_sample/complete_sample.txt')
 	# read_graph_txt('data_files/robokop/robokop_singular_symm_rels.txt')
+	read_graph_txt('robokop2_sample/sample_with_negs_wo_test_data2.txt')
+	read_graph_txt('robokop2_sample/sample_duplicate_symm_rels.txt')

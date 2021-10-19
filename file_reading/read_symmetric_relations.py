@@ -5,7 +5,7 @@ def read_symmetric_relations(file):
 	"""
 	with open(file, 'r') as f:
 		symmetric_relations = f.read().strip().split('\n')
-		symmetric_relations = [s.replace(' ', '_') for s in symmetric_relations]
+		# symmetric_relations = [s.replace(' ', '_') for s in symmetric_relations]
 		# print(symmetric_relations)
 
 	return symmetric_relations

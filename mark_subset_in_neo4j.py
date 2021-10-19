@@ -9,31 +9,86 @@ def mark_subset_in_neo4j(subset_file, subset_name, clear_previous):
 	with open(subset_file, 'r') as f:
 		skip = False
 		for line in f:
-			if count < 1219000:
-				count += 1
-				continue
-			if skip:
-				skip = False
-				continue
+			# if count < 3901000:
+			# 	count += 1
+			# 	continue
+			# if skip:
+			# 	skip = False
+			# 	continue
+			# else:
+			s, p, o = line.strip().split('\t')
+			# if p in GRAPH.symm_rels:
+			# 	skip = True
+
+			rel = list(GRAPH.run("MATCH (e)-[r:`{}`]->(f) WHERE id(e)={} AND id(f)={} SET r.sample='{}' RETURN r".format(p, s, o, subset_name)))
+			# rel = list(GRAPH.run("MATCH (e)-[r:`{}`]->(f) WHERE id(e)={} AND id(f)={} RETURN r".format(p, s, o, subset_name)))
+			# print(rel)
+			if len(rel) <= 0:
+				print('failed on {} {} {}'.format(s, p, o))
 			else:
-				s, p, o = line.strip().split('\t')
-				# if p in GRAPH.symm_rels:
-				# 	skip = True
-
-				rel = list(GRAPH.run("MATCH (e)-[r:`{}`]->(f) WHERE id(e)={} AND id(f)={} SET r.sample='{}' RETURN r".format(p, s, o, subset_name)))
-				# print(rel)
-				if len(rel) <= 0:
-					print('failed on {} {} {}'.format(s, p, o))
-
-				count += 1
-				if count % 1000 == 0:
-					print(count)
+				count += len(rel)
+				if len(rel) > 1:
+					print(f'{len(rel)} copies of ({s},{p},{o})')
+			if count % 1000 == 0:
+				print(count)
 
 	print('{} edges were marked'.format(count))
 
-	nodes = list(GRAPH.run("MATCH (e)-[r]->() WHERE r.sample='{}' SET e.sample='{}' RETURN e".format(subset_name, subset_name)))
+	'''entity_types = set()
+	labels = list(GRAPH.run("MATCH (e) RETURN DISTINCT labels(e), count(*)"))
+	labels.sort(key=lambda x: int(x[1]), reverse=True)
+	labels = [l[0] for l in labels]
 
-	print('{} nodes were marked'.format(len(nodes)))
+	# done = [['biolink:NamedThing', 'biolink:Entity', 'biolink:PhysicalEssenceOrOccurrent', 'biolink:ChemicalEntity', 'biolink:PhysicalEssence', 'biolink:MolecularEntity', 'biolink:SmallMolecule'], 
+	# 		['biolink:NamedThing', 'biolink:Entity', 'biolink:BiologicalEntity', 'biolink:GeneOrGeneProduct', 'biolink:MacromolecularMachineMixin', 'biolink:Gene'],
+	# 		]
+	# quit()
+	# for label in labels:
+	# 	for l in label[0]:
+	# 		entity_types.add(l)
+
+	count2 = 0
+	# for e_type in entity_types:
+	for label in labels:
+		# if label in done:
+		# 	print('done')
+		# 	continue
+
+		query = "MATCH (e:`{}`)-[r]->() WHERE r.sample='{}' SET e.sample='{}' RETURN DISTINCT e".format('`:`'.join(label), subset_name, subset_name)
+		# print(query)
+		nodes = list(GRAPH.run(query))
+
+		print('{} nodes of types {} were marked'.format(len(nodes), label))
+		count2 += len(nodes)'''
+
+	count2 = 0
+	entities = set()
+	with open(subset_file, 'r') as f:
+		for line in f:
+			s, p, o = line.strip().split('\t')
+
+			if s not in entities:
+				node = list(GRAPH.run("MATCH (e) WHERE id(e)={} SET e.sample='{}' RETURN e".format(s, subset_name)))
+				if len(node) <= 0:
+					print('failed on node {}'.format(s))
+				else:
+					count2 += 1
+					entities.add(s)
+
+			if o not in entities:
+				node = list(GRAPH.run("MATCH (e) WHERE id(e)={} SET e.sample='{}' RETURN e".format(o, subset_name)))
+				if len(node) <= 0:
+					print('failed on node {}'.format(o))
+				else:
+					count2 += 1
+					entities.add(o)
+
+			if count2 % 5000 == 0:
+				print(count2)
+
+
+
+	print('{} nodes total were marked'.format(count2))
 
 def clear_previous_subset():
 	# result = list(GRAPH.run("MATCH ()-[r]->() SET r.sample=null"))

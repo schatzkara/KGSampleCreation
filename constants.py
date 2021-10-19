@@ -2,9 +2,9 @@
 from Knowledge_Graph import Knowledge_Graph
 
 # the knowledge graph in use
-KG = 'robokop'  # 'robokop' or 'drkg'
+KG = 'robokop2'  # 'robokop' or 'drkg'
 GRAPH = Knowledge_Graph(KG)
-SAMPLE = 'rw4mil'
+SAMPLE = 'rw5mil'
 INDICES = True
 
 # # the rule set(s)

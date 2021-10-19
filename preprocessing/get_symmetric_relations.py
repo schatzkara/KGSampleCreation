@@ -1,6 +1,6 @@
 import yaml
 
-input_file = 'C://Users//Kara//Documents//Independent_Study//biolink-model//biolink-model.yaml'
+input_file = 'C://Users//Kara//Documents//Research//ExternalSourceCode//biolink-model//biolink-model.yaml'
 output_file = 'symmetric_relations.txt'
 
 
@@ -11,22 +11,22 @@ def get_symmetric_relations(input_file, output_file):
 	"""
 	symmetric_relations = []
 
-	with open(input_file) as f:
+	with open(input_file, encoding='utf-8') as f:
 		model = yaml.full_load(f)  # load(f, Loader=yaml.FullLoader)
 
 		slots = model['slots']
 
 		skip = True
 		for key in slots.keys():
-			if key == 'related to':
-				skip = False
+			# if key == 'related to':
+			# 	skip = False
 
-			if skip:
-				continue
+			# if skip:
+			# 	continue
 
 			if 'symmetric' in slots[key].keys():
 				print(key)
-				symmetric_relations.append(key)
+				symmetric_relations.append(key.replace(' ', '_'))
 
 	with open(output_file, 'w') as f:
 		for rel in symmetric_relations:

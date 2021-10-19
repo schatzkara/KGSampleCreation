@@ -62,10 +62,41 @@ class Knowledge_Graph:
 			result = self.graph.run(query)
 			# print(result)
 			return result
-		except py2neo.database.work.TransientError as e:
+		
+		# except py2neo.database.GraphError as e:
+			# print(e)
+			# print(query)
+			# return None
+
+		except py2neo.database.work.ClientError as e:
 			print(e)
 			print(query)
-		except:
-			print(query)
-			print('FAILED')
 			return None
+
+		except py2neo.database.work.DatabaseError as e:
+			print(e)
+			print(query)
+			return None
+
+		except py2neo.database.work.TransientError as e: 
+			print(e)
+			print(query)
+			return None
+	
+		# except py2neo.database.TransactionError as e:
+			# print(e)
+			# print(query)
+			# return None
+
+		except:
+			print('UNKNOWN EXCEPTION')
+			print(query)
+			return None
+			
+		# except py2neo.database.work.TransientError as e:
+		# 	print(e)
+		# 	print(query)
+		# except:
+		# 	print(query)
+		# 	print('FAILED')
+		# 	return None
