@@ -7,17 +7,17 @@ from add_negative_predicate import generate_negative_predicate, add_negative_pre
 from get_experimental_data import get_hypothesized_facts_txt, get_negative_examples
 from mark_subset_in_neo4j import mark_subset_in_neo4j
 
-OUTPUT_DIR = 'robokop2_sample'
+OUTPUT_DIR = 'robokop2-2_sample'
 
-KG_FILE_NAME = 'robokop_singular_symm_rels.txt'
+KG_FILE_NAME = 'robokop2-2_singular_symm_rels.txt'
 
-SAMPLE_NAME = 'rw5mil'
-SAMPLE_FILE_NAME = 'sample.txt'
+SAMPLE_NAME = 'wo_test'
+SAMPLE_FILE_NAME = KG_FILE_NAME  # 'sample.txt'
 DESIRED_SIZE = 5000000
 RELS_TO_AVOID = []
 ENTITIES_TO_AVOID = []
 
-TYPES_FILE = 'robokop_sample_entity_types.txt'
+TYPES_FILE = 'robokop2-2_entity_types.txt'  # 'robokop_sample_entity_types.txt'
 
 NEGATIVES_FILE = 'sample_generated_negatives.txt'
 SAMPLE_WITH_NEGS_FILE = 'sample_with_negs.txt'
@@ -58,12 +58,12 @@ if __name__ == '__main__':
 
 	# Steps:
 	# 1. Use kg_to_txt.py to create a .txt version of the KG without duplicated symmetric relations
-	kg_to_txt(KG_FILE_NAME, duplicate_symm_rels=False)
+	'''kg_to_txt(KG_FILE_NAME, duplicate_symm_rels=False)
 	print('Completed step 1.')
 
 	# 2. Use graph_sampling.py to generate a subset of the graph of the desired size
 	random_walk(KG_FILE_NAME, SAMPLE_FILE_NAME, desired_size=DESIRED_SIZE, rels_to_avoid=RELS_TO_AVOID, entities_to_avoid=ENTITIES_TO_AVOID)
-	print('Completed step 2.')
+	print('Completed step 2.')'''
 
 	# 3. Use get_node_types.py to create a .txt file of the node types
 	make_types_file(SAMPLE_FILE_NAME, TYPES_FILE)

@@ -1,3 +1,5 @@
+# I don't remember what this file is...
+
 import sys
 from constants import *
 from read_graph_txt import read_graph_txt

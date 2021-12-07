@@ -262,10 +262,14 @@ if __name__ == '__main__':
 	# get_hypothesized_facts_txt('drkg_with_negs_wo_test_data.txt', 'other_hypothesized_facts.txt', 100, 'treats')
 	get_negative_examples(kg_file, types_file, 'drkg_sample/other_hypothesized_facts.txt', 'drkg_sample/other_hypothesized_negatives.txt', 5)'''
 
-	kg_file = '../ExplanationGeneration/data_files/robokop_sample/complete_sample.txt'
-	types_file = '../ExplanationGeneration/data_files/robokop/robokop_types.txt'
-	pos_file = '../ExplanationGeneration/data_files/robokop_sample/all_treats_not_in_sample/last_100_true.txt'
-	neg_file = '../ExplanationGeneration/data_files/robokop_sample/all_treats_not_in_sample/last_100_false.txt'
+	# kg_file = '../ExplanationGeneration/data_files/robokop_sample/complete_sample.txt'
+	# types_file = '../ExplanationGeneration/data_files/robokop/robokop_types.txt'
+	# pos_file = '../ExplanationGeneration/data_files/robokop_sample/all_treats_not_in_sample/last_100_true.txt'
+	# neg_file = '../ExplanationGeneration/data_files/robokop_sample/all_treats_not_in_sample/last_100_false.txt'
 
-	get_negative_examples(kg_file, types_file, pos_file, neg_file, 1)
+	# get_negative_examples(kg_file, types_file, pos_file, neg_file, 1)
 
+	kg_file = 'robokop2_sample/sample_with_negs_wo_test_data2.txt'
+	new_kg_file = 'robokop2_sample/sample_with_negs_wo_test_data2_wo_ameliorates_test_data.txt'
+	pos_file = 'robokop2_sample/ameliorates_facts.txt'
+	get_hypothesized_facts_txt(kg_file, new_kg_file, pos_file, 'biolink:ameliorates', 250)
