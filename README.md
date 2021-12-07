@@ -1,5 +1,7 @@
 # KGSampleCreation
 
+This project extracts a random walk subgraph of a KG in neo4j.
+
 Random walk must be done on KG WITHOUT duplicated symmetric relations
 Rule mining must be done on KG WITH duplicated symmetric relations
 
