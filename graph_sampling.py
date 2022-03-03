@@ -3,14 +3,16 @@ from read_graph_txt import read_graph_txt
 from file_reading.read_entities import read_entities
 from file_reading.read_relations import read_relations
 
-def random_walk(input_file, output_file, desired_size, rels_to_avoid=[], entities_to_avoid=[], restart_prob=15):
-	print(entities_to_avoid)
-	print(rels_to_avoid)
+def random_walk(input_file, output_file, desired_size, rels_to_avoid=[], entities_to_avoid=[], restart_prob=15, verbose=True):
+	# print(entities_to_avoid)
+	# print(rels_to_avoid)
 
 	nodes, _, _, graph = read_graph_txt(input_file)
-	print('read graph')
+	if verbose:
+		print('read graph')
 	graph_size = calculate_graph_size(graph)
-	print('got graph size: {}'.format(graph_size))
+	if verbose:
+		print('got graph size: {}'.format(graph_size))
 	sample = set()
 
 	previous_size = 0
@@ -49,7 +51,7 @@ def random_walk(input_file, output_file, desired_size, rels_to_avoid=[], entitie
 					graph.pop(current_node)
 
 			count += 1
-			if len(sample) - previous_size > 100000:
+			if verbose and len(sample) - previous_size >= 100000:
 				print(len(sample))
 				previous_size = len(sample)
 
