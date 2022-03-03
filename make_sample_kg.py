@@ -30,8 +30,11 @@ def get_entity_labels_and_names(input_file, output_file):
 			print(f"{count}/{total}")
 
 def create_kg(input_file, node_file, id_mapping_file):
-	with open(id_mapping_file, 'r', encoding='utf-8') as f:
-		done_nodes = set([line.strip().split('\t')[0] for line in f.readlines()])
+	if exists(id_mapping_file):
+		with open(id_mapping_file, 'r', encoding='utf-8') as f:
+			done_nodes = set([line.strip().split('\t')[0] for line in f.readlines()])
+	else:
+		done_nodes = []
 
 	count = 0
 	with open(node_file, 'r', encoding='utf-8') as f:
@@ -54,8 +57,11 @@ def create_kg(input_file, node_file, id_mapping_file):
 			if count % 1000 == 0:
 				print(count)
 
-	with open('created_edges.txt', 'r') as f:
-		done_edges = set(f.readlines())
+	if exists('created_edges.txt'):
+		with open('created_edges.txt', 'r') as f:
+			done_edges = set(f.readlines())
+	else:
+		done_edges = []
 
 	count = 0
 	with open(input_file, 'r') as f:
@@ -78,9 +84,9 @@ def create_kg(input_file, node_file, id_mapping_file):
 
 
 if __name__ == '__main__':
-	input_file = 'robokop2-2_sample/sample_with_negs.txt'
-	output_file = 'robokop2-2_sample/node_labels_and_names.txt'
-	get_entity_labels_and_names(input_file, output_file)
+	# input_file = 'robokop2-2_sample/sample_with_negs.txt'
+	# output_file = 'robokop2-2_sample/node_labels_and_names.txt'
+	# get_entity_labels_and_names(input_file, output_file)
 
 	input_file = 'robokop2-2_sample/sample_with_negs_wo_test_data2.txt'
 	node_file = 'robokop2-2_sample/node_labels_and_names.txt'
