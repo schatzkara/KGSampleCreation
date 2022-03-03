@@ -4,7 +4,7 @@ from Knowledge_Graph import Knowledge_Graph
 # the knowledge graph in use
 KG = 'robokop2-2'  # robokop, drkg, robokop2, hetionet
 GRAPH = Knowledge_Graph(KG)
-SAMPLE = 'rw5mil'
+SAMPLE = None
 INDICES = True
 
 # # the rule set(s)
