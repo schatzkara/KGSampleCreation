@@ -1,4 +1,3 @@
-
 def map_ids(input_file, output_file, id_mapping_file):
 	id_mappings = {}
 	with open(id_mapping_file, 'r') as f:
@@ -21,7 +20,7 @@ def map_ids(input_file, output_file, id_mapping_file):
 
 
 if __name__ == '__main__':
-	input_file = 'samples/robokop2/facts.txt'  # alternatives.txt'
-	output_file = 'samples/robokop2/facts_sample.txt'
-	id_mapping_file = 'samples/robokop2/robokop2_to_rk2sample_id_mappings.txt'
+	input_file = '../ExplanationGeneration/samples/hetionet/alternatives.txt'  # alternatives.txt'
+	output_file = '../ExplanationGeneration/samples/hetionet/alternatives_v2.txt'
+	id_mapping_file = '../ExplanationGeneration/samples/hetionet/old_het_to_new_het_id_mappings.txt'
 	map_ids(input_file, output_file, id_mapping_file)

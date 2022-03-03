@@ -269,7 +269,10 @@ if __name__ == '__main__':
 
 	# get_negative_examples(kg_file, types_file, pos_file, neg_file, 1)
 
-	kg_file = 'robokop2_sample/sample_with_negs_wo_test_data2.txt'
-	new_kg_file = 'robokop2_sample/sample_with_negs_wo_test_data2_wo_ameliorates_test_data.txt'
-	pos_file = 'robokop2_sample/ameliorates_facts.txt'
-	get_hypothesized_facts_txt(kg_file, new_kg_file, pos_file, 'biolink:ameliorates', 250)
+	# kg_file = 'robokop2_sample/sample_with_negs_wo_test_data2.txt'
+	# new_kg_file = 'robokop2_sample/sample_with_negs_wo_test_data2_wo_ameliorates_test_data.txt'
+	# pos_file = 'robokop2_sample/ameliorates_facts.txt'
+	# get_hypothesized_facts_txt(kg_file, new_kg_file, pos_file, 'biolink:ameliorates', 250)
+
+	get_negative_examples('samples/hetionet/sample_with_negs_wo_test_data.txt', 'samples/hetionet/hetionet_entity_types.txt', 
+		'samples/hetionet/other_facts.txt', 'samples/hetionet/other_alternatives.txt', 1)

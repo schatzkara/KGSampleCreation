@@ -7,17 +7,19 @@ from add_negative_predicate import generate_negative_predicate, add_negative_pre
 from get_experimental_data import get_hypothesized_facts_txt, get_negative_examples
 from mark_subset_in_neo4j import mark_subset_in_neo4j
 
-OUTPUT_DIR = 'robokop2-2_sample'
+KG = 'robokop2-2'
 
-KG_FILE_NAME = 'robokop2-2_singular_symm_rels.txt'
+OUTPUT_DIR = f'samples/{kg}_complete'
+
+KG_FILE_NAME = f'{kg}_singular_symm_rels.txt'
 
 SAMPLE_NAME = 'wo_test'
-SAMPLE_FILE_NAME = KG_FILE_NAME  # 'sample.txt'
+SAMPLE_FILE_NAME = 'sample.txt'
 DESIRED_SIZE = 5000000
 RELS_TO_AVOID = []
 ENTITIES_TO_AVOID = []
 
-TYPES_FILE = 'robokop2-2_entity_types.txt'  # 'robokop_sample_entity_types.txt'
+TYPES_FILE = f'{kg}_sample_entity_types.txt'  # 'robokop_sample_entity_types.txt'
 
 NEGATIVES_FILE = 'sample_generated_negatives.txt'
 SAMPLE_WITH_NEGS_FILE = 'sample_with_negs.txt'
@@ -33,7 +35,9 @@ NUM_ALTS_PER_POS = 5
 
 SAMPLE_WO_TEST_FILE2 = 'sample_with_negs_wo_test_data2.txt'
 FACTS_FILE2 = 'other_facts.txt'
+ALTS_FILE2 = 'other_alternatives.txt'
 NUM_POS_FACTS2 = 250
+NUM_ALTS_PER_POS2 = 1
 
 SAMPLE_WITH_DUPLCIATE_SYMM_RELS = 'sample_duplicate_symm_rels.txt'
 
@@ -49,21 +53,23 @@ FACTS_FILE = os.path.join(OUTPUT_DIR, FACTS_FILE)
 ALTS_FILE = os.path.join(OUTPUT_DIR, ALTS_FILE)
 SAMPLE_WO_TEST_FILE2 = os.path.join(OUTPUT_DIR, SAMPLE_WO_TEST_FILE2)
 FACTS_FILE2 = os.path.join(OUTPUT_DIR, FACTS_FILE2)
+ALTS_FILE2 = os.path.join(OUTPUT_DIR, ALTS_FILE2)
 SAMPLE_WITH_DUPLCIATE_SYMM_RELS = os.path.join(OUTPUT_DIR, SAMPLE_WITH_DUPLCIATE_SYMM_RELS)
 
 
 if __name__ == '__main__':
+	# '''
 	# Random walk must be done on KG WITHOUT duplicated symmetric relations
 	# Rule mining must be done on KG WITH duplicated symmetric relations
 
 	# Steps:
 	# 1. Use kg_to_txt.py to create a .txt version of the KG without duplicated symmetric relations
-	'''kg_to_txt(KG_FILE_NAME, duplicate_symm_rels=False)
+	kg_to_txt(KG_FILE_NAME, duplicate_symm_rels=False)
 	print('Completed step 1.')
-
+	quit()
 	# 2. Use graph_sampling.py to generate a subset of the graph of the desired size
 	random_walk(KG_FILE_NAME, SAMPLE_FILE_NAME, desired_size=DESIRED_SIZE, rels_to_avoid=RELS_TO_AVOID, entities_to_avoid=ENTITIES_TO_AVOID)
-	print('Completed step 2.')'''
+	print('Completed step 2.')
 
 	# 3. Use get_node_types.py to create a .txt file of the node types
 	make_types_file(SAMPLE_FILE_NAME, TYPES_FILE)
@@ -89,8 +95,11 @@ if __name__ == '__main__':
 	get_hypothesized_facts_txt(SAMPLE_WITH_NEGS_FILE, SAMPLE_WO_TEST_FILE, FACTS_FILE, PREDICATE, NUM_POS_FACTS)
 	get_negative_examples(SAMPLE_WITH_NEGS_FILE, TYPES_FILE, FACTS_FILE, ALTS_FILE, NUM_ALTS_PER_POS)
 	get_hypothesized_facts_txt(SAMPLE_WO_TEST_FILE, SAMPLE_WO_TEST_FILE2, FACTS_FILE2, PREDICATE, NUM_POS_FACTS2)
+	# '''
+	get_negative_examples(SAMPLE_WO_TEST_FILE, TYPES_FILE, FACTS_FILE2, ALTS_FILE2, NUM_ALTS_PER_POS2)
 	print('Completed step 5 and 6.')
 
+	# '''
 	# 8. Use mark_subset_in_neo4j.py to mark all triples in the subset in Neo4j
 	mark_subset_in_neo4j(SAMPLE_WO_TEST_FILE2, SAMPLE_NAME, clear_previous=False)
 	print('Completed step 8.')
@@ -101,3 +110,4 @@ if __name__ == '__main__':
 	
 
 	# instead, create sample in a new neo4j database????
+	# '''
