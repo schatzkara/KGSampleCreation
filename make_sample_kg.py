@@ -61,7 +61,7 @@ def create_kg(input_file, node_file, id_mapping_file):
 		with open('created_edges.txt', 'r') as f:
 			done_edges = set(f.readlines())
 	else:
-		done_edges = []
+		done_edges = set()
 
 	count = 0
 	with open(input_file, 'r') as f:

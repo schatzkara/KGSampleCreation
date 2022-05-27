@@ -1,7 +1,7 @@
 import os
 import random
 from constants import *
-from read_graph_txt import read_graph_txt
+from file_reading.read_graph_txt import read_graph_txt
 from utils.graph_utils import clean_integer_output, get_entity_type
 
 
@@ -25,16 +25,17 @@ def get_hypothesized_facts_txt(kg_file, new_kg_file, output_file, predicate, n):
 	# output_file2 = os.path.join(head, name + '_wo_test_data.' + ext)
 	# # print(output_file)
 
-	with open(new_kg_file, 'w') as f:
-		for s, p, o in triples:
-			f.write('{}\t{}\t{}\n'.format(s, p, o))
+	if new_kg_file is not None:
+		with open(new_kg_file, 'w') as f:
+			for s, p, o in triples:
+				f.write('{}\t{}\t{}\n'.format(s, p, o))
 
 	with open(output_file, 'w') as f:
 		for s, p, o in hypothesized_facts:
 			f.write('{}\t{}\t{}\n'.format(s, p, o))
 
 def get_negative_examples(kg_file, types_file, pos_file, output_file, n):
-	nodes, predicates, triples, graph, node_to_type, type_to_nodes = read_graph_txt(kg_file, types_file)
+	nodes, predicates, triples, graph, node_to_type, type_to_nodes = read_graph_txt(kg_file, types_file=types_file)
 
 	negatives = {}
 	with open(pos_file, 'r') as f:
@@ -60,6 +61,8 @@ def get_negative_examples(kg_file, types_file, pos_file, output_file, n):
 						found = False
 						while not found and len(possible_s_ids) != 0:
 							rand_node = random.choice(possible_s_ids)
+							if rand_node not in nodes:
+								print('here')
 							already_connected = in_kg(rand_node, p, o, triples)
 							if not already_connected:
 								negatives[line].append((rand_node, p, o))
@@ -74,6 +77,8 @@ def get_negative_examples(kg_file, types_file, pos_file, output_file, n):
 						found = False
 						while not found and len(possible_o_ids) != 0:
 							rand_node = random.choice(possible_o_ids)
+							if rand_node not in nodes:
+								print('here2')
 							already_connected = in_kg(s, p, rand_node, triples)
 							if not already_connected:
 								negatives[line].append((s, p, rand_node))

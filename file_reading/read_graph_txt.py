@@ -1,4 +1,5 @@
 def read_graph_txt(file_name, types_file=None):
+	# print(types_file)
 	nodes = set()
 	predicates = set()
 	triples = []
@@ -31,12 +32,13 @@ def read_graph_txt(file_name, types_file=None):
 	predicates = sorted(list(predicates))
 
 	if types_file is not None:
-		node_to_type, type_to_nodes = read_types_file(types_file)
+		node_to_type, type_to_nodes = read_types_file(types_file, nodes=nodes)
 		return nodes, predicates, triples, graph, node_to_type, type_to_nodes
 
 	return nodes, predicates, triples, graph
 
-def read_types_file(file_name):
+def read_types_file(file_name, nodes=None):
+	# print(nodes)
 	node_to_type = {}
 	type_to_nodes = {}
 	with open(file_name, 'r') as f:
@@ -44,13 +46,17 @@ def read_types_file(file_name):
 			node, p, node_type = line.strip().split('\t')
 			node = int(node)
 
-			if node not in node_to_type.keys():
-				node_to_type[node] = []
-			node_to_type[node].append(node_type)
+			if nodes is None or node in nodes:
+				# print('hereeee')
+				# continue
 
-			if node_type not in type_to_nodes.keys():
-				type_to_nodes[node_type] = []
-			type_to_nodes[node_type].append(node)
+				if node not in node_to_type.keys():
+					node_to_type[node] = []
+				node_to_type[node].append(node_type)
+
+				if node_type not in type_to_nodes.keys():
+					type_to_nodes[node_type] = []
+				type_to_nodes[node_type].append(node)
 
 	return node_to_type, type_to_nodes
 

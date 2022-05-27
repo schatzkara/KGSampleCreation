@@ -1,5 +1,5 @@
 import random
-from read_graph_txt import read_graph_txt
+from file_reading.read_graph_txt import read_graph_txt
 from file_reading.read_entities import read_entities
 from file_reading.read_relations import read_relations
 

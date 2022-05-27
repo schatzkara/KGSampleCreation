@@ -9,23 +9,23 @@ from mark_subset_in_neo4j import mark_subset_in_neo4j
 
 KG = 'robokop2-2'
 
-OUTPUT_DIR = f'samples/{kg}_complete'
+OUTPUT_DIR = f'samples/{KG}_large'
 
-KG_FILE_NAME = f'{kg}_singular_symm_rels.txt'
+KG_FILE_NAME = f'{KG}_singular_symm_rels.txt'
 
 SAMPLE_NAME = 'wo_test'
 SAMPLE_FILE_NAME = 'sample.txt'
-DESIRED_SIZE = 5000000
+DESIRED_SIZE = 11000000
 RELS_TO_AVOID = []
 ENTITIES_TO_AVOID = []
 
-TYPES_FILE = f'{kg}_sample_entity_types.txt'  # 'robokop_sample_entity_types.txt'
+TYPES_FILE = f'{KG}_entity_types.txt'  # 'robokop_sample_entity_types.txt'
 
 NEGATIVES_FILE = 'sample_generated_negatives.txt'
 SAMPLE_WITH_NEGS_FILE = 'sample_with_negs.txt'
 PREDICATE = 'biolink:treats'
 NUM_NEGS_PER_POS = 1
-ADD_NEGS_TO_NEO4J = True
+ADD_NEGS_TO_NEO4J = False
 
 SAMPLE_WO_TEST_FILE = 'sample_with_negs_wo_test_data.txt'
 FACTS_FILE = 'facts.txt'
@@ -64,16 +64,16 @@ if __name__ == '__main__':
 
 	# Steps:
 	# 1. Use kg_to_txt.py to create a .txt version of the KG without duplicated symmetric relations
-	kg_to_txt(KG_FILE_NAME, duplicate_symm_rels=False)
-	print('Completed step 1.')
-	quit()
+	'''kg_to_txt(KG_FILE_NAME, duplicate_symm_rels=False)
+				print('Completed step 1.')'''
+	# quit()
 	# 2. Use graph_sampling.py to generate a subset of the graph of the desired size
 	random_walk(KG_FILE_NAME, SAMPLE_FILE_NAME, desired_size=DESIRED_SIZE, rels_to_avoid=RELS_TO_AVOID, entities_to_avoid=ENTITIES_TO_AVOID)
 	print('Completed step 2.')
 
 	# 3. Use get_node_types.py to create a .txt file of the node types
-	make_types_file(SAMPLE_FILE_NAME, TYPES_FILE)
-	print('Completed step 3.')
+	'''make_types_file(SAMPLE_FILE_NAME, TYPES_FILE)
+				print('Completed step 3.')'''
 
 	# 4. Use add_negative_predicate.py to generate n negative triples for each positive triple of each predicate desired AND (optionally) add the negative triples to the neo4j version of the KG
 	generate_negative_predicate(SAMPLE_FILE_NAME, TYPES_FILE, NEGATIVES_FILE, predicate=PREDICATE, n=NUM_NEGS_PER_POS)
@@ -101,8 +101,8 @@ if __name__ == '__main__':
 
 	# '''
 	# 8. Use mark_subset_in_neo4j.py to mark all triples in the subset in Neo4j
-	mark_subset_in_neo4j(SAMPLE_WO_TEST_FILE2, SAMPLE_NAME, clear_previous=False)
-	print('Completed step 8.')
+	'''mark_subset_in_neo4j(SAMPLE_WO_TEST_FILE2, SAMPLE_NAME, clear_previous=False)
+				print('Completed step 8.')'''
 
 	# 7. Use kg_to_txt.py to duplicate the symmetric relations in this sample
 	duplicate_symm_rels(SAMPLE_WO_TEST_FILE2, SAMPLE_WITH_DUPLCIATE_SYMM_RELS)

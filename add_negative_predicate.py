@@ -1,7 +1,7 @@
 import random
 from constants import *
 from file_reading.read_facts import read_facts
-from read_graph_txt import read_graph_txt
+from file_reading.read_graph_txt import read_graph_txt
 from utils.graph_utils import clean_integer_output, get_entity_type
 
 

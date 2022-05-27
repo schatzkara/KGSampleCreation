@@ -44,6 +44,8 @@ if __name__ == '__main__':
 	# make_types_file('robokop_singular_symm_rels.txt')
 	# duplicate_symm_rels('../rk_sample.txt', '../complete_sample.txt')
 
-	kg_to_txt('drkg.txt', duplicate_symm_rels=False)
-	make_types_file('drkg.txt')
-	duplicate_symm_rels('drkg_with_negs_wo_test_data_wo_test_data.txt', 'complete_sample.txt')
+	output_file = 'robokop2-3_singular_symm_rels.txt'
+	output_file2 = 'robokop2-3_duplicate_symm_rels.txt'
+	# kg_to_txt(output_file, duplicate_symm_rels=False)
+	duplicate_symm_rels(output_file, output_file2)
+	# duplicate_symm_rels('drkg_with_negs_wo_test_data_wo_test_data.txt', 'complete_sample.txt')
